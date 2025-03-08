@@ -4,8 +4,8 @@
   "main": "index.js",
 "scripts": {
   "build:css": "sass css/styles.scss css/styles.css",
-  "build:kss": "kss --config kss-config.json",
-  "copy:css": "mkdir -p docs/css && cp css/styles.css docs/css/",
+  "build:kss": "npx kss --config kss-config.json",
+  "copy:css": "node -e \"require('fs').mkdirSync('docs/css', { recursive: true }); require('fs').copyFileSync('css/styles.css', 'docs/css/styles.css')\"",
   "build": "npm run build:css && npm run build:kss && npm run copy:css",
   "watch:css": "sass css/styles.scss css/styles.css --watch",
   "test": "echo \"Error: no test specified\" && exit 1"
