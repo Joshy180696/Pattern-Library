@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "kss --config kss-config.json",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "sass css/styles.scss css/styles.css",
-    "watch:css": "sass css/styles.scss css/styles.css --watch"
+    "build:kss": "kss --config kss-config.json",
+    "build": "npm run build:css && npm run build:kss",
+    "watch:css": "sass css/styles.scss css/styles.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
