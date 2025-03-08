@@ -6,7 +6,6 @@
   ],
   "destination": "docs/",
  "css": ["css/styles.css"],
-  "js": [
-    "../js/docs.js"
-  ]
+  "js": [],
+  "homepage": "homepage.md"
 }
