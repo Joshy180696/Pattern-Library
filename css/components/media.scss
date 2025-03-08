@@ -1,0 +1,193 @@
+/*
+Media
+
+Displays an image alongside content, with responsive behavior for different screen sizes. 
+Accessible and semantic for all users, optimized for performance across devices.
+
+Markup:
+<article class="media" role="article">
+    <img class="media__image" 
+      srcset="https://placehold.co/150x150 150w, https://placehold.co/300x300 300w"
+      sizes="(max-width: 768px) 100vw, 150px"
+      src="https://placehold.co/150x150" alt="Strength training illustration" />
+    <div class="media__body">
+        <h4>Strength</h4>
+        <p>
+            Strength training is an important part of
+            injury prevention. Focus on your core—
+            especially your abs and glutes.
+        </p>
+    </div>
+</article>
+<article class="media media--reverse" role="article">
+    <img class="media__image" 
+      srcset="https://placehold.co/150x150 150w, https://placehold.co/300x300 300w"
+      sizes="(max-width: 768px) 100vw, 150px"
+      src="https://placehold.co/150x150" alt="Strength training illustration" />
+    <div class="media__body">
+        <h4>Strength</h4>
+        <p>
+            Strength training is an important part of
+            injury prevention. Focus on your core—
+            especially your abs and glutes.
+        </p>
+    </div>
+</article>
+<article class="media media--multiple" role="article">
+    <img class="media__image" 
+      srcset="https://placehold.co/150x150 150w, https://placehold.co/300x300 300w"
+      sizes="(max-width: 768px) 100vw, 150px"
+      src="https://placehold.co/150x150" alt="First strength training illustration" />
+    <div class="media__body">
+        <h4>Strength</h4>
+        <p>
+            Strength training is an important part of
+            injury prevention. Focus on your core—
+            especially your abs and glutes.
+        </p>
+    </div>
+    <img class="media__image" 
+      srcset="https://placehold.co/150x150 150w, https://placehold.co/300x300 300w"
+      sizes="(max-width: 768px) 100vw, 150px"
+      src="https://placehold.co/150x150" alt="Second strength training illustration" />
+</article>
+<article class="media media--small" role="article">
+    <img class="media__image" 
+      srcset="https://placehold.co/100x100 100w, https://placehold.co/200x200 200w"
+      sizes="(max-width: 768px) 100vw, 100px"
+      src="https://placehold.co/100x100" alt="Compact strength training illustration" />
+    <div class="media__body">
+        <h4>Small Media</h4>
+        <p>Compact media for tight spaces.</p>
+    </div>
+</article>
+<article class="media">
+    <img class="media__image media__image--large" 
+      srcset="https://placehold.co/300x300 300w, https://placehold.co/600x600 600w"
+      sizes="(max-width: 768px) 100vw, 300px"
+      src="https://placehold.co/300x300" alt="Large strength training illustration" />
+    <div class="media__body">
+        <h4>Strength (Large)</h4>
+        <p>Larger media for spacious layouts on desktop.</p>
+    </div>
+</article>
+
+Modifiers:
+.media--reverse - Image on the right, content on the left
+.media--multiple - Multiple images in the media object
+.media--small - Smaller version for compact layouts (100x100px image)
+.media__image--large - Larger image for desktop (300x300px max)
+
+Styleguide Media
+*/
+.media {
+    display: flex;
+    align-items: flex-start;
+    padding: 1.5em;
+    background-color: #eee;
+    border-radius: 0.5em;
+    gap: 1.5em; /* Replaces margin-left for better spacing control */
+    margin-bottom: 1em; /* Space between multiple media objects */
+
+    @media (max-width: 768px) {
+        flex-direction: column; /* Stack on mobile */
+        padding: 1em; /* Reduce padding on mobile for tighter layout */
+        .media__image {
+            margin-right: 0; /* Reset margin for mobile */
+            width: 100%; /* Full width on mobile */
+        }
+        .media__body {
+            margin-top: 1em; /* Space between image and content on mobile */
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1200px) {
+        padding: 1.25em; /* Slightly reduced padding for tablets */
+        .media__image {
+            flex-shrink: 0; /* Prevent image from shrinking on larger screens */
+            max-width: 200px; /* Medium image size for tablets */
+        }
+    }
+
+    @media (min-width: 1201px) {
+        padding: 2em; /* Increased padding for desktops */
+        .media__image {
+            flex-shrink: 0;
+            max-width: 300px; /* Larger image size for desktops */
+        }
+    }
+}
+
+.media--reverse {
+    flex-direction: row-reverse; /* Image on the right, content on the left */
+
+    @media (max-width: 768px) {
+        flex-direction: column; /* Stack on mobile, image first */
+    }
+}
+
+.media--multiple {
+    .media__image + .media__image {
+        margin-left: 1em; /* Space between multiple images */
+    }
+
+    @media (max-width: 768px) {
+        .media__image {
+            width: 100%; /* Full width for each image on mobile */
+            margin-left: 0; /* Reset margin for mobile stacking */
+        }
+    }
+}
+
+.media--small {
+    padding: 1em;
+    .media__image {
+        max-width: 100px; /* Smaller image for compact layouts */
+
+        @media (min-width: 769px) {
+            max-width: 150px; /* Slightly larger on desktop */
+        }
+    }
+}
+
+.media__image {
+    float: left; /* Maintain for older browsers or fallback */
+    margin-right: 1.5em;
+    max-width: 150px; /* Default image width */
+    height: auto;
+    object-fit: cover; /* Ensure images scale properly */
+}
+
+.media__image--large {
+    max-width: 300px; /* Larger image for desktop */
+
+    @media (max-width: 768px) {
+        max-width: 100%; /* Full width on mobile */
+    }
+}
+
+.media__body {
+    overflow: auto;
+    margin-top: 0;
+    flex-grow: 1; /* Allow content to grow and fill space */
+    color: #333; /* Ensure readable text color for accessibility */
+}
+
+.media__body > h4 {
+    margin-top: 0;
+    margin-bottom: 0.5em; /* Space below heading */
+    color: #222; /* Slightly darker for contrast */
+}
+
+/* Accessibility Enhancements */
+.media {
+    &:focus {
+        outline: 2px solid #007bff; /* Visible focus outline for keyboard navigation */
+    }
+}
+
+.media__image {
+    &[src*="placehold.co"] {
+        background-color: #ccc; /* Fallback background for placeholder images */
+    }
+}

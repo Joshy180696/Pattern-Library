@@ -1,0 +1,535 @@
+@charset "UTF-8";
+:root {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Import component styles */
+/*
+Media
+
+Displays an image alongside content, with responsive behavior for different screen sizes. 
+Accessible and semantic for all users, optimized for performance across devices.
+
+Markup:
+<article class="media" role="article">
+    <img class="media__image" 
+      srcset="https://placehold.co/150x150 150w, https://placehold.co/300x300 300w"
+      sizes="(max-width: 768px) 100vw, 150px"
+      src="https://placehold.co/150x150" alt="Strength training illustration" />
+    <div class="media__body">
+        <h4>Strength</h4>
+        <p>
+            Strength training is an important part of
+            injury prevention. Focus on your core—
+            especially your abs and glutes.
+        </p>
+    </div>
+</article>
+<article class="media media--reverse" role="article">
+    <img class="media__image" 
+      srcset="https://placehold.co/150x150 150w, https://placehold.co/300x300 300w"
+      sizes="(max-width: 768px) 100vw, 150px"
+      src="https://placehold.co/150x150" alt="Strength training illustration" />
+    <div class="media__body">
+        <h4>Strength</h4>
+        <p>
+            Strength training is an important part of
+            injury prevention. Focus on your core—
+            especially your abs and glutes.
+        </p>
+    </div>
+</article>
+<article class="media media--multiple" role="article">
+    <img class="media__image" 
+      srcset="https://placehold.co/150x150 150w, https://placehold.co/300x300 300w"
+      sizes="(max-width: 768px) 100vw, 150px"
+      src="https://placehold.co/150x150" alt="First strength training illustration" />
+    <div class="media__body">
+        <h4>Strength</h4>
+        <p>
+            Strength training is an important part of
+            injury prevention. Focus on your core—
+            especially your abs and glutes.
+        </p>
+    </div>
+    <img class="media__image" 
+      srcset="https://placehold.co/150x150 150w, https://placehold.co/300x300 300w"
+      sizes="(max-width: 768px) 100vw, 150px"
+      src="https://placehold.co/150x150" alt="Second strength training illustration" />
+</article>
+<article class="media media--small" role="article">
+    <img class="media__image" 
+      srcset="https://placehold.co/100x100 100w, https://placehold.co/200x200 200w"
+      sizes="(max-width: 768px) 100vw, 100px"
+      src="https://placehold.co/100x100" alt="Compact strength training illustration" />
+    <div class="media__body">
+        <h4>Small Media</h4>
+        <p>Compact media for tight spaces.</p>
+    </div>
+</article>
+<article class="media">
+    <img class="media__image media__image--large" 
+      srcset="https://placehold.co/300x300 300w, https://placehold.co/600x600 600w"
+      sizes="(max-width: 768px) 100vw, 300px"
+      src="https://placehold.co/300x300" alt="Large strength training illustration" />
+    <div class="media__body">
+        <h4>Strength (Large)</h4>
+        <p>Larger media for spacious layouts on desktop.</p>
+    </div>
+</article>
+
+Modifiers:
+.media--reverse - Image on the right, content on the left
+.media--multiple - Multiple images in the media object
+.media--small - Smaller version for compact layouts (100x100px image)
+.media__image--large - Larger image for desktop (300x300px max)
+
+Styleguide Media
+*/
+.media {
+  display: flex;
+  align-items: flex-start;
+  padding: 1.5em;
+  background-color: #eee;
+  border-radius: 0.5em;
+  gap: 1.5em; /* Replaces margin-left for better spacing control */
+  margin-bottom: 1em; /* Space between multiple media objects */
+}
+@media (max-width: 768px) {
+  .media {
+    flex-direction: column; /* Stack on mobile */
+    padding: 1em; /* Reduce padding on mobile for tighter layout */
+  }
+  .media .media__image {
+    margin-right: 0; /* Reset margin for mobile */
+    width: 100%; /* Full width on mobile */
+  }
+  .media .media__body {
+    margin-top: 1em; /* Space between image and content on mobile */
+  }
+}
+@media (min-width: 769px) and (max-width: 1200px) {
+  .media {
+    padding: 1.25em; /* Slightly reduced padding for tablets */
+  }
+  .media .media__image {
+    flex-shrink: 0; /* Prevent image from shrinking on larger screens */
+    max-width: 200px; /* Medium image size for tablets */
+  }
+}
+@media (min-width: 1201px) {
+  .media {
+    padding: 2em; /* Increased padding for desktops */
+  }
+  .media .media__image {
+    flex-shrink: 0;
+    max-width: 300px; /* Larger image size for desktops */
+  }
+}
+
+.media--reverse {
+  flex-direction: row-reverse; /* Image on the right, content on the left */
+}
+@media (max-width: 768px) {
+  .media--reverse {
+    flex-direction: column; /* Stack on mobile, image first */
+  }
+}
+
+.media--multiple .media__image + .media__image {
+  margin-left: 1em; /* Space between multiple images */
+}
+@media (max-width: 768px) {
+  .media--multiple .media__image {
+    width: 100%; /* Full width for each image on mobile */
+    margin-left: 0; /* Reset margin for mobile stacking */
+  }
+}
+
+.media--small {
+  padding: 1em;
+}
+.media--small .media__image {
+  max-width: 100px; /* Smaller image for compact layouts */
+}
+@media (min-width: 769px) {
+  .media--small .media__image {
+    max-width: 150px; /* Slightly larger on desktop */
+  }
+}
+
+.media__image {
+  float: left; /* Maintain for older browsers or fallback */
+  margin-right: 1.5em;
+  max-width: 150px; /* Default image width */
+  height: auto;
+  object-fit: cover; /* Ensure images scale properly */
+}
+
+.media__image--large {
+  max-width: 300px; /* Larger image for desktop */
+}
+@media (max-width: 768px) {
+  .media__image--large {
+    max-width: 100%; /* Full width on mobile */
+  }
+}
+
+.media__body {
+  overflow: auto;
+  margin-top: 0;
+  flex-grow: 1; /* Allow content to grow and fill space */
+  color: #333; /* Ensure readable text color for accessibility */
+}
+
+.media__body > h4 {
+  margin-top: 0;
+  margin-bottom: 0.5em; /* Space below heading */
+  color: #222; /* Slightly darker for contrast */
+}
+
+/* Accessibility Enhancements */
+.media:focus {
+  outline: 2px solid #007bff; /* Visible focus outline for keyboard navigation */
+}
+
+.media__image[src*="placehold.co"] {
+  background-color: #ccc; /* Fallback background for placeholder images */
+}
+
+/*
+Buttons
+
+Buttons are available in a number of sizes and
+colors. You may mix and match any size with any
+color
+
+Markup:
+<button class="button {{modifier_class}}">
+    click here
+</button>
+
+.button--success - A green success button
+.button--danger  - A red danger button
+.button--small   - A small button
+.button--large   - A large button
+
+Styleguide Buttons
+*/
+.button {
+  padding: 1em 1.25em;
+  border: 1px solid #265559;
+  border-radius: 0.2em;
+  background-color: transparent;
+  font-size: 0.8rem;
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.button--success {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+}
+
+.button--danger {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+.button--small {
+  font-size: 0.8rem;
+}
+
+.button--large {
+  font-size: 1.2rem;
+}
+
+/*
+Navbar
+
+A responsive navigation bar for site navigation, collapsing into a hamburger menu on mobile devices.
+Supports branding, navigation items, and optional dropdowns. Accessible and semantic for all users.
+
+Markup:
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar__brand">
+        <a href="/" class="navbar__brand-link">MyBrand</a>
+    </div>
+    <button class="navbar__toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="navbar__toggle-icon"></span>
+    </button>
+    <ul class="navbar__nav">
+        <li class="navbar__item"><a href="/" class="navbar__link">Home</a></li>
+        <li class="navbar__item"><a href="/about" class="navbar__link">About</a></li>
+        <li class="navbar__item">
+            <a href="/products" class="navbar__link navbar__link--dropdown" aria-haspopup="true">Products</a>
+            <ul class="navbar__dropdown">
+                <li><a href="/products/electronics" class="navbar__dropdown-link">Electronics</a></li>
+                <li><a href="/products/clothing" class="navbar__dropdown-link">Clothing</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<nav class="navbar navbar--dark" role="navigation" aria-label="Main navigation">
+    <div class="navbar__brand">
+        <a href="/" class="navbar__brand-link">MyBrand</a>
+    </div>
+    <button class="navbar__toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="navbar__toggle-icon"></span>
+    </button>
+    <ul class="navbar__nav">
+        <li class="navbar__item"><a href="/" class="navbar__link">Home</a></li>
+        <li class="navbar__item"><a href="/about" class="navbar__link">About</a></li>
+        <li class="navbar__item">
+            <a href="/products" class="navbar__link navbar__link--dropdown" aria-haspopup="true">Products</a>
+            <ul class="navbar__dropdown">
+                <li><a href="/products/electronics" class="navbar__dropdown-link">Electronics</a></li>
+                <li><a href="/products/clothing" class="navbar__dropdown-link">Clothing</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+Modifiers:
+.navbar--dark - Dark-themed navbar with inverted colors
+.navbar__link--dropdown - Indicates a dropdown trigger
+.navbar__toggle--open - Applied to toggle button when menu is expanded
+
+Styleguide Navbar
+*/
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 0.75rem;
+  }
+}
+
+.navbar__brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-right: 2rem;
+}
+@media (max-width: 768px) {
+  .navbar__brand {
+    margin-right: 0;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.navbar__brand-link {
+  color: #007bff;
+  text-decoration: none;
+}
+.navbar__brand-link:hover, .navbar__brand-link:focus {
+  color: #0056b3;
+  outline: none;
+}
+
+.navbar__toggle {
+  display: none; /* Hidden on desktop */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+@media (max-width: 768px) {
+  .navbar__toggle {
+    display: block;
+  }
+}
+.navbar__toggle:focus {
+  outline: 2px solid #007bff;
+}
+
+.navbar__toggle-icon {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  position: relative;
+}
+.navbar__toggle-icon::before, .navbar__toggle-icon::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  transition: transform 0.3s ease;
+}
+.navbar__toggle-icon::before {
+  top: -8px;
+}
+.navbar__toggle-icon::after {
+  bottom: -8px;
+}
+
+.navbar__toggle--open .navbar__toggle-icon {
+  background-color: transparent;
+}
+.navbar__toggle--open .navbar__toggle-icon::before {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.navbar__toggle--open .navbar__toggle-icon::after {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+.navbar__nav {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (max-width: 768px) {
+  .navbar__nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+  }
+  .navbar__nav.navbar__nav--open {
+    display: flex;
+  }
+}
+
+.navbar__item {
+  margin-right: 1.5rem;
+}
+@media (max-width: 768px) {
+  .navbar__item {
+    margin: 0.5rem 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.navbar__link {
+  color: #333;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+}
+.navbar__link:hover, .navbar__link:focus {
+  color: #007bff;
+  outline: none;
+}
+.navbar__link--dropdown {
+  position: relative; /* Ensure dropdown positions relative to this element */
+  padding-right: 1.5rem; /* Space for dropdown indicator */
+}
+.navbar__link--dropdown::after {
+  content: "▼";
+  font-size: 0.7rem;
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.navbar__dropdown {
+  display: none;
+  position: absolute;
+  top: 100%; /* Position directly below the link */
+  left: 0; /* Align with the left edge of the link */
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 0.5rem 0;
+  min-width: 150px;
+  border-radius: 0.25rem;
+  z-index: 1000; /* Ensure dropdown appears above other content */
+}
+@media (max-width: 768px) {
+  .navbar__dropdown {
+    position: static; /* Static positioning on mobile for stacking */
+    background-color: #f8f9fa;
+    box-shadow: none;
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+    width: 100%; /* Full width on mobile */
+    display: block; /* Always visible in mobile menu */
+  }
+}
+
+.navbar__link--dropdown:hover + .navbar__dropdown,
+.navbar__dropdown:hover {
+  display: block; /* Show on hover/focus on desktop */
+}
+
+.navbar__dropdown-link {
+  color: #333;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  display: block;
+  transition: color 0.3s ease;
+}
+.navbar__dropdown-link:hover, .navbar__dropdown-link:focus {
+  color: #007bff;
+  outline: none;
+}
+
+.navbar--dark {
+  background-color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.navbar--dark .navbar__brand-link,
+.navbar--dark .navbar__link,
+.navbar--dark .navbar__dropdown-link {
+  color: #ffffff;
+}
+.navbar--dark .navbar__brand-link:hover, .navbar--dark .navbar__brand-link:focus,
+.navbar--dark .navbar__link:hover,
+.navbar--dark .navbar__link:focus,
+.navbar--dark .navbar__dropdown-link:hover,
+.navbar--dark .navbar__dropdown-link:focus {
+  color: #80bdff;
+}
+.navbar--dark .navbar__toggle-icon,
+.navbar--dark .navbar__toggle-icon::before,
+.navbar--dark .navbar__toggle-icon::after {
+  background-color: #ffffff;
+}
+@media (max-width: 768px) {
+  .navbar--dark .navbar__nav {
+    background-color: #333;
+  }
+}
+.navbar--dark .navbar__dropdown {
+  background-color: #444;
+}
+
+/* JavaScript Toggle for Mobile Menu (Add this behavior in JS if needed) */
+.navbar__nav--open {
+  display: flex !important; /* Override display: none for mobile */
+}
+
+/*# sourceMappingURL=styles.css.map */

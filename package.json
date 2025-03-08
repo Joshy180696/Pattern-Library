@@ -1,0 +1,20 @@
+{
+  "name": "styleslibrary",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "kss --config kss-config.json",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "sass css/styles.scss css/styles.css",
+    "watch:css": "sass css/styles.scss css/styles.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "kss": "^3.1.0",
+    "sass": "^1.69.5"
+  }
+}
+
