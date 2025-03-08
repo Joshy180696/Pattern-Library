@@ -14,9 +14,10 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
+  "Dependencies": {
     "kss": "^3.1.0",
     "sass": "^1.69.5"
-  }
+  },
+  "devDependencies": {}
 }
 
